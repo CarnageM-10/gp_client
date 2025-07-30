@@ -135,15 +135,15 @@ export default function LivraisonDetailScreenClient({ route }) {
             </View>
 
             <View style={styles.trackingWrapper}>
-              {renderStep('en_cours', 'Récupération du colis')}
-              {renderStep('en_cours', 'Vérification du colis')}
-              {renderStep('en_cours', 'Paiement effectué')}
-              {renderStep('recupere', 'Départ du colis')}
-              {renderStep('recupere', 'Arrivée du colis')}
-              {renderStep('termine', 'Livraison effectuée')}
+              {renderStep('colis récupéré', 'Récupération du colis')}
+              {renderStep('vérification du colis', 'Vérification du colis')}
+              {renderStep('paiement effectué', 'Paiement effectué')}
+              {renderStep('livraison en cours', 'Départ du colis')}
+              {renderStep('livraison en cours', 'Arrivée du colis')}
+              {renderStep('livraison effectué', 'Livraison effectuée')}
             </View>
 
-            {isEtape('termine') && (
+            {isEtape('livraison effectué') && (
               <>
                 <Text style={styles.deliveryDate}>
                   Date de livraison :{' '}
