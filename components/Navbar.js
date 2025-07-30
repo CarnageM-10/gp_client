@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={() => navigation.navigate('Annonce')}>
+      <TouchableOpacity onPress={() => navigation.navigate('SearchDeliveryRequests')}>
         <Image
           source={require('../assets/left.png')}
           style={styles.leftIcon}

@@ -31,7 +31,7 @@ export default function HomeScreen() {
       const user = session.user;
 
       const { data, error: profileError } = await supabase
-        .from('profiles')
+        .from('profiles_client')
         .select('name, email, number')
         .eq('auth_id', user.id)  // <-- Utilise auth_id ici (UUID)
         .single();

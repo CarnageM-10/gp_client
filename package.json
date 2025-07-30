@@ -38,6 +38,7 @@
     "react-native-flash-message": "^0.4.2",
     "react-native-gesture-handler": "^2.26.0",
     "react-native-image-crop-picker": "^0.50.1",
+    "react-native-ratings": "^8.1.0",
     "react-native-safe-area-context": "^5.5.0",
     "react-native-screens": "^4.11.1",
     "react-native-webview": "13.13.5"

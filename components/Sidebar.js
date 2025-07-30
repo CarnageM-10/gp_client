@@ -25,9 +25,9 @@ const Sidebar = ({ language }) => {
         return;
       }
 
-      // Récupère avatar_url depuis profiles
+      // Récupère avatar_url depuis profiles_client
       const { data, error } = await supabase
-        .from('profiles')
+        .from('profiles_client')
         .select('avatar_url')
         .eq('auth_id', user.id)  // ici auth_id = uuid de user connecté
         .single();
@@ -58,7 +58,7 @@ const Sidebar = ({ language }) => {
 
         <TouchableOpacity
           style={styles.sidebarItem}
-          onPress={() => navigation.navigate('Suivi')}
+          onPress={() => navigation.navigate('LivraisonList')}
         >
           <Image
             source={require('../assets/fast-delivery.png')}

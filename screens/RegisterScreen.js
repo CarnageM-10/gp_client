@@ -18,12 +18,11 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Pour l'œil
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigation = useNavigation();
 
   const validatePassword = (pwd) => {
-    // Minimum 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     return regex.test(pwd);
   };
@@ -38,7 +37,9 @@ export default function RegisterScreen() {
     }
 
     if (!validatePassword(cleanPassword)) {
-      alert('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.');
+      alert(
+        'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.'
+      );
       return;
     }
 
@@ -49,6 +50,7 @@ export default function RegisterScreen() {
         data: {
           name,
           number,
+          app_type: 'client', // fixé ici
         },
       },
     });
@@ -105,10 +107,7 @@ export default function RegisterScreen() {
               onChangeText={setPassword}
               autoCapitalize="none"
             />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.eyeButton}
-            >
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
               <Image
                 source={
                   showPassword

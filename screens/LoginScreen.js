@@ -21,7 +21,7 @@ export default function LoginScreen() {
 
   const navigation = useNavigation();
 
-const handleLogin = async () => {
+  const handleLogin = async () => {
   if (!email || !password) {
     alert('Merci de remplir email et mot de passe');
     return;
@@ -50,9 +50,8 @@ const handleLogin = async () => {
       return;
     }
 
-    // Vérifie si un profil existe déjà via auth_id (UUID)
     const { data: profile, error: profileError } = await supabase
-      .from('profiles')
+      .from('profiles_client')
       .select('*')
       .eq('auth_id', user.id)
       .single();
@@ -65,7 +64,7 @@ const handleLogin = async () => {
     if (!profile) {
       const { name = '', number = '' } = user.user_metadata || {};
 
-      const { error: insertError } = await supabase.from('profiles').insert({
+      const { error: insertError } = await supabase.from('profiles_client').insert({
         auth_id: user.id,
         email: user.email,
         name,
@@ -78,33 +77,11 @@ const handleLogin = async () => {
       }
     }
 
-    // Vérification dans la table adhesions
-    const { data: adhesionData, error: adhesionError } = await supabase
-      .from('adhesions')
-      .select('is_validated')
-      .eq('user_id', user.id)
-      .single();
-
-    if (adhesionError && adhesionError.code !== 'PGRST116') {
-      console.error(adhesionError);
-      alert('Erreur lors de la récupération des données d’adhésion');
-      return;
-    }
-
-    if (!adhesionData) {
-      // Pas encore d'inscription
-      navigation.replace('AdhesionForm');
-    } else if (adhesionData.is_validated === false) {
-      // Dossier en attente
-      navigation.replace('WaitingValidation');
-    } else if (adhesionData.is_validated === true) {
-      // Dossier validé
-      navigation.replace('Annonce');
-    }
-
-  } catch (e) {
+    // ✅ Redirection après connexion et création du profil
+    navigation.navigate('SearchDeliveryRequests');
+  } catch (error) {
+    alert('Une erreur est survenue');
     setLoading(false);
-    alert('Erreur inattendue: ' + e.message);
   }
 };
 

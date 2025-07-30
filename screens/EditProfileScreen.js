@@ -68,7 +68,7 @@ const fetchProfileData = async () => {
   const user = data.session.user;
 
   const { data: profileData, error: profileError } = await supabase
-    .from('profiles')
+    .from('profiles_client')
     .select('*')
     .eq('auth_id', user.id)
     .single();
@@ -102,7 +102,7 @@ const fetchProfileData = async () => {
     };
 
     const { error } = await supabase
-        .from('profiles')
+        .from('profiles_client')
         .update(updates)
         .eq('auth_id', user.id);
 
@@ -174,7 +174,7 @@ const fetchProfileData = async () => {
 
     if (uploadedUrl) {
       const { error } = await supabase
-        .from('profiles')
+        .from('profiles_client')
         .update({ avatar_url: uploadedUrl })
         .eq('auth_id', user.id);
 
@@ -195,23 +195,23 @@ const uploadImageToSupabase = async (uri, userId) => {
     // 2. Base64 -> buffer
     const buffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
 
-    // 3. Liste tous les fichiers dans avatars/{userId}
-    const folderPath = `avatars/${userId}`;
+    // 3. Liste tous les fichiers dans avatars-client/{userId}
+    const folderPath = `avatars-client/${userId}`;
     const { data: listData, error: listError } = await supabase.storage
-      .from('avatars')
+      .from('avatars-client')
       .list(folderPath);
 
     if (listError) {
-      console.warn('Erreur listage dossier avatars:', listError.message);
+      console.warn('Erreur listage dossier avatars-client:', listError.message);
     } else {
       // 4. Supprime tous les fichiers existants dans ce dossier
       const filesToDelete = listData.map(file => `${folderPath}/${file.name}`);
       if (filesToDelete.length > 0) {
         const { error: removeError } = await supabase.storage
-          .from('avatars')
+          .from('avatars-client')
           .remove(filesToDelete);
         if (removeError) {
-          console.warn('Erreur suppression fichiers avatars:', removeError.message);
+          console.warn('Erreur suppression fichiers avatars-client:', removeError.message);
         }
       }
     }
@@ -222,7 +222,7 @@ const uploadImageToSupabase = async (uri, userId) => {
     const filePath = `${folderPath}/${fileName}`;
 
     const { error: uploadError } = await supabase.storage
-      .from('avatars')
+      .from('avatars-client')
       .upload(filePath, buffer, {
         contentType: `image/${fileExt}`,
         upsert: true,
@@ -232,7 +232,7 @@ const uploadImageToSupabase = async (uri, userId) => {
 
     // 6. Récupérer URL publique
     const { data: publicUrlData } = supabase.storage
-      .from('avatars')
+      .from('avatars-client')
       .getPublicUrl(filePath);
 
     return publicUrlData.publicUrl + `?t=${Date.now()}`;
@@ -246,22 +246,22 @@ const handleDeleteAvatar = async () => {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return;
 
-  const folderPath = `avatars/${user.id}`;
+  const folderPath = `avatars-client/${user.id}`;
   const filePath = `${folderPath}/profile.jpg`;
 
-  // Supprime le fichier avatar
+  // Supprime le fichier avatar-client
   const { error: deleteError } = await supabase.storage
-    .from('avatars')
+    .from('avatars-client')
     .remove([filePath]);
 
   if (deleteError) {
-    console.error('Erreur suppression avatar:', deleteError.message);
+    console.error('Erreur suppression avatar-client:', deleteError.message);
     return;
   }
 
   // Met à jour la base de données pour supprimer le lien avatar_url
   const { error: updateError } = await supabase
-    .from('profiles')
+    .from('profiles_client')
     .update({ avatar_url: null })
     .eq('auth_id', user.id);
 
@@ -391,7 +391,7 @@ if (loading) return <ActivityIndicator style={{ flex: 1 }} />;
                     }
 
                     const { error: profileError } = await supabase
-                      .from('profiles')
+                      .from('profiles_client')
                       .update({ email: newEmail })
                       .eq('auth_id', user.id);
 

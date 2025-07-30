@@ -78,7 +78,7 @@ const ProfileScreen = () => {
     if (!user) return null;
 
     const { data: profile, error: profileError } = await supabase
-      .from('profiles')
+      .from('profiles_client')
       .select('*')
       .eq('auth_id', user.id)
       .single();
@@ -97,7 +97,7 @@ const ProfileScreen = () => {
     if (!user) return;
 
     const { error: updateError } = await supabase
-      .from('profiles')
+      .from('profiles_client')
       .update(updates)
       .eq('auth_id', user.id);
 

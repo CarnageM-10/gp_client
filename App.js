@@ -10,13 +10,17 @@ import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import EmailResetRequestScreen from './screens/EmailResetRequestScreen';
-import AdhesionFormScreen from './screens/AdhesionFormScreen';
-import AnnonceScreen from './screens/AnnonceScreen';
-import WaitingValidationScreen from './screens/WaitingValidationScreen';
+import SearchDeliveryRequestsScreen from './screens/SearchDeliveryRequestsScreen';
 import AnnonceDetailScreen from './screens/AnnonceDetailScreen';
 import EditAnnonceScreen from './screens/EditAnnonceScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import EditProfileScreen from './screens/EditProfileScreen';
+import SearchResultsScreen from './screens/SearchResultsScreen';
+import ConfirmationScreen from './screens/ConfirmationScreen';
+import ChatListScreen from './screens/ChatListScreen';
+import ChatDetailScreen from './screens/ChatDetailScreen';
+import LivraisonListScreenClient from './screens/LivraisonListScreenClient';
+import LivraisonDetailScreenClient from './screens/LivraisonDetailScreenClient';
 
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import { LanguageProvider } from './context/LanguageContext';
@@ -36,7 +40,7 @@ function SplashScreen({ navigation }) {
         data: { session },
       } = await supabase.auth.getSession();
       if (session) {
-        navigation.replace('AdhesionForm');
+        navigation.replace('Login');
       } else {
         navigation.replace('Login');
       }
@@ -65,13 +69,17 @@ function MainApp() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="EmailResetRequest" component={EmailResetRequestScreen} />
-        <Stack.Screen name="AdhesionForm" component={AdhesionFormScreen} />
-        <Stack.Screen name="Annonce" component={AnnonceScreen} />
-        <Stack.Screen name="WaitingValidation" component={WaitingValidationScreen} />
+        <Stack.Screen name="SearchDeliveryRequests" component={SearchDeliveryRequestsScreen} />
         <Stack.Screen name="AnnonceDetail" component={AnnonceDetailScreen} />
         <Stack.Screen name="EditAnnonce" component={EditAnnonceScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        <Stack.Screen name="SearchResultsScreen" component={SearchResultsScreen} />
+        <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} />
+        <Stack.Screen name="ChatDetail" component={ChatDetailScreen} />
+        <Stack.Screen name="Messages" component={ChatListScreen} />
+        <Stack.Screen name="LivraisonList" component={LivraisonListScreenClient} />
+        <Stack.Screen name="LivraisonDetail" component={LivraisonDetailScreenClient} />
       </Stack.Navigator>
     </NavigationContainer>
   );
