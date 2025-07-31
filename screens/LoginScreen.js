@@ -132,6 +132,13 @@ export default function LoginScreen() {
             <Text style={styles.forgotPasswordText}>Mot de passe oublié ?</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity onPress={() => navigation.navigate('PublicTrackingInput')}>
+            <Text style={{ color: 'blue', marginTop: 20 }}>
+              🔍 Suivre un colis sans se connecter
+            </Text>
+          </TouchableOpacity>
+
+
           <TouchableOpacity onPress={handleLogin} style={{ marginTop: 10, alignSelf: 'flex-end' }}>
             <View style={styles.logoGroup}>
               <Text style={styles.logoText}>Login</Text>

@@ -21,6 +21,9 @@ import ChatListScreen from './screens/ChatListScreen';
 import ChatDetailScreen from './screens/ChatDetailScreen';
 import LivraisonListScreenClient from './screens/LivraisonListScreenClient';
 import LivraisonDetailScreenClient from './screens/LivraisonDetailScreenClient';
+import PublicTrackingInputScreen from './screens/PublicTrackingInputScreen';
+import PublicTrackingResult from './screens/PublicTrackingResult';
+
 
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import { LanguageProvider } from './context/LanguageContext';
@@ -80,6 +83,9 @@ function MainApp() {
         <Stack.Screen name="Messages" component={ChatListScreen} />
         <Stack.Screen name="LivraisonList" component={LivraisonListScreenClient} />
         <Stack.Screen name="LivraisonDetail" component={LivraisonDetailScreenClient} />
+        <Stack.Screen name="PublicTrackingInput" component={PublicTrackingInputScreen} />
+        <Stack.Screen name="PublicTrackingResult" component={PublicTrackingResult} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
